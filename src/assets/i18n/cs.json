@@ -151,6 +151,14 @@
     }
   },
   "uni": {
+    "aria-label": {
+      "arrow-icon": "Ikona šipky",
+      "error-icon": "Ikona chyby",
+      "expand-row": "rozbalit řádek",
+      "row-actions": "akce",
+      "select-page-of-posts": "Vyberte stránku příspěvků",
+      "warning-icon": "Ikona varování"
+    },
     "clear": "Vymazat",
     "clear-filters": "Vymazat filtry",
     "close": "Zavřít",
