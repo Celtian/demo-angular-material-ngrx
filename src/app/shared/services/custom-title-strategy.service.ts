@@ -8,7 +8,7 @@ import { PageOptions } from '../dto/page.dto';
   providedIn: 'root',
 })
 export class CustomTitleStrategyService extends TitleStrategy {
-  private readonly siteName = 'RxJS demo';
+  private readonly siteName = 'NgRx demo';
 
   constructor(
     private translate: TranslateService,

@@ -1,4 +1,4 @@
-# Demo Angular Material RxJS
+# Demo Angular Material NgRx
 
 ## Description
 
