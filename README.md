@@ -1,4 +1,4 @@
-# Demo Angular Material CRUD
+# Demo Angular Material RxJS
 
 ## Description
 

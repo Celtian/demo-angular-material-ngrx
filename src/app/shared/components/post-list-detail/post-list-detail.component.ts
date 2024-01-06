@@ -11,10 +11,10 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subject, debounceTime, switchMap } from 'rxjs';
+import { UserCollectionService } from 'src/app/post/user-collection.service';
 import { DataSource } from 'src/app/shared/classes/data-source';
 import { DEFAULT_USER } from 'src/app/shared/constants/user.constant';
 import { UserDto } from 'src/app/shared/dto/user.dto';
-import { ApiService } from 'src/app/shared/services/api.service';
 import { UserInfoComponent } from '../user-info/user-info.component';
 
 @Component({
@@ -33,7 +33,7 @@ export class PostListDetailComponent implements OnChanges, OnInit {
   private idSubj = new Subject<number>();
 
   constructor(
-    private apiService: ApiService,
+    private userCollection: UserCollectionService,
     private translate: TranslateService,
   ) {}
 
@@ -41,7 +41,7 @@ export class PostListDetailComponent implements OnChanges, OnInit {
     this.idSubj
       .pipe(
         debounceTime(500),
-        switchMap((id) => this.apiService.user(id)),
+        switchMap((id) => this.userCollection.getByKey(id)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({

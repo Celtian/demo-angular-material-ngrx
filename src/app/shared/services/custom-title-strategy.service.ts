@@ -8,7 +8,7 @@ import { PageOptions } from '../dto/page.dto';
   providedIn: 'root',
 })
 export class CustomTitleStrategyService extends TitleStrategy {
-  private readonly siteName = 'CRUD demo';
+  private readonly siteName = 'RxJS demo';
 
   constructor(
     private translate: TranslateService,
@@ -22,7 +22,7 @@ export class CustomTitleStrategyService extends TitleStrategy {
     const title = this.buildTitle(snapshot);
     if (title) {
       const parsedData = this.parseTitleData(title);
-      this.translate.getTranslation(this.translate.currentLang).subscribe(() => {
+      this.translate.getStreamOnTranslationChange(this.translate.currentLang).subscribe(() => {
         this.translateTitleFromParts(parsedData, parsedData.identifier);
         this.updateMeta(parsedData.description);
       });

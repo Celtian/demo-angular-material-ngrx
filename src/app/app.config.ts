@@ -1,6 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import localeCs from '@angular/common/locales/cs';
-import { ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, importProvidersFrom, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TitleStrategy, provideRouter, withViewTransitions } from '@angular/router';
 
@@ -8,20 +8,27 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DefaultDataServiceConfig, DefaultDataServiceFactory, provideEntityData, withEffects } from '@ngrx/data';
+import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
 import { provideAppVersion } from 'ngx-app-version';
 import { provideFixedFooter } from 'ngx-fixed-footer';
 import { provideTranslateVersion } from 'ngx-translate-version';
 import { VERSION } from '../environments/version';
 import { routes } from './app.routes';
+import { entityConfig } from './entity-metadata';
+import { CustomDefaultDataServiceFactory } from './shared/services/custom-default-data.service';
 import { CustomErrorHandlerService } from './shared/services/custom-error-handler.service';
 import { CustomTitleStrategyService } from './shared/services/custom-title-strategy.service';
 import { MatPaginationIntlService } from './shared/services/mat-paginator-intl.service';
-import { provideStore } from '@ngrx/store';
-import { provideEntityData, withEffects } from '@ngrx/data';
-import { entityConfig } from './entity-metadata';
-import { provideEffects } from '@ngrx/effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 registerLocaleData(localeCs, 'cs-CS');
+
+export const defaultDataServiceConfig: DefaultDataServiceConfig = {
+  root: 'https://jsonplaceholder.typicode.com',
+  timeout: 1000 * 60,
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,8 +51,17 @@ export const appConfig: ApplicationConfig = {
       provide: MatPaginatorIntl,
       useClass: MatPaginationIntlService,
     },
+    {
+      provide: DefaultDataServiceConfig,
+      useValue: defaultDataServiceConfig,
+    },
+    {
+      provide: DefaultDataServiceFactory,
+      useClass: CustomDefaultDataServiceFactory,
+    },
     provideStore(),
-    provideEntityData(entityConfig, withEffects()),
     provideEffects(),
+    provideEntityData(entityConfig, withEffects()),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

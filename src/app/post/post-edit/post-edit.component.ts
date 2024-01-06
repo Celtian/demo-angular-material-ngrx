@@ -22,9 +22,9 @@ import { CanComponentDeactivate } from 'src/app/shared/guards/can-deactivate-gua
 import { filterNumber } from 'src/app/shared/rxjs/filter-number';
 import { getParamId } from 'src/app/shared/rxjs/get-param-id';
 import { setInitialIfNotNumber } from 'src/app/shared/rxjs/set-initial-if-not-number';
-import { ApiService } from 'src/app/shared/services/api.service';
 import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
 import { CustomConfirmDialog, CustomConfirmDialogService } from 'src/app/shared/services/custom-confirm-dialog.service';
+import { PostCollectionService } from '../post-collection.service';
 
 @Component({
   standalone: true,
@@ -58,7 +58,7 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
   });
 
   constructor(
-    private apiService: ApiService,
+    private postCollection: PostCollectionService,
     private route: ActivatedRoute,
     private translate: TranslateService,
     private breadcrumbsPortalService: BreadcrumbsPortalService,
@@ -82,7 +82,7 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
         getParamId(),
         setInitialIfNotNumber(this.dataSource),
         filterNumber(),
-        switchMap((id) => this.apiService.detail(Number(id))),
+        switchMap((id) => this.postCollection.getByKey(id)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
@@ -106,8 +106,11 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
   }
 
   public onSubmit(): void {
-    this.apiService
-      .patch(this.dataSource.data().id, this.form.value)
+    this.postCollection
+      .update({
+        id: this.dataSource.data().id,
+        ...this.form.value,
+      })
       .pipe(first())
       .subscribe({
         next: (post) => {

@@ -2,7 +2,7 @@ import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, first, switchMap } from 'rxjs';
-import { ApiService } from '../services/api.service';
+import { PostCollectionService } from 'src/app/post/post-collection.service';
 import { CustomConfirmDialog, CustomConfirmDialogService } from '../services/custom-confirm-dialog.service';
 
 @Directive({
@@ -14,7 +14,7 @@ export class PostDeleteDirective {
   @Output() public deleted = new EventEmitter<number>();
 
   constructor(
-    private apiService: ApiService,
+    private postCollection: PostCollectionService,
     private confirm: CustomConfirmDialogService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
@@ -27,7 +27,7 @@ export class PostDeleteDirective {
       .pipe(
         first(),
         filter((res) => !!res),
-        switchMap(() => this.apiService.delete(this.id)),
+        switchMap(() => this.postCollection.delete(this.id)),
       )
       .subscribe({
         next: () => {

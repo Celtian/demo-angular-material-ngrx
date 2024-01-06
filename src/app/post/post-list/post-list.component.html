@@ -4,9 +4,10 @@
     matInput
     (input)="onQueryChange($event)"
     [placeholder]="'input.search.placeholder' | translate"
-    [(ngModel)]="query"
+    [ngModel]="query()"
+    (ngModelChange)="query.set($event)"
   />
-  @if (query) {
+  @if (query()) {
     <button
       matSuffix
       mat-icon-button
@@ -30,8 +31,8 @@
   [fixedLayout]="true"
   [dataSource]="data()"
   matSort
-  matSortActive="id"
-  matSortDirection="asc"
+  [matSortActive]="sortBy()"
+  [matSortDirection]="sortDirection()"
   matSortDisableClear
   multiTemplateDataRows
   [trackBy]="trackByPostId"
@@ -148,6 +149,8 @@
 
 <mat-paginator
   [pageSizeOptions]="pageSizeOptions"
+  [pageSize]="pageSize()"
+  [pageIndex]="pageIndex() - 1"
   [length]="totalCount()"
   (page)="onPageChange($event)"
   aria-label="Select page of posts"

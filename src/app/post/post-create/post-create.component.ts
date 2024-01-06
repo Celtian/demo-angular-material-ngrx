@@ -13,11 +13,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { PostInputDto } from 'src/app/shared/dto/post.dto';
 import { CanComponentDeactivate } from 'src/app/shared/guards/can-deactivate-guard.service';
-import { ApiService } from 'src/app/shared/services/api.service';
 import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
 import { CustomConfirmDialog, CustomConfirmDialogService } from 'src/app/shared/services/custom-confirm-dialog.service';
+import { PostCollectionService } from '../post-collection.service';
 
 @Component({
   standalone: true,
@@ -49,7 +48,7 @@ export class PostCreateComponent implements OnInit, OnDestroy, CanComponentDeact
   });
 
   constructor(
-    private apiService: ApiService,
+    private postCollection: PostCollectionService,
     private breadcrumbsPortalService: BreadcrumbsPortalService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -72,8 +71,9 @@ export class PostCreateComponent implements OnInit, OnDestroy, CanComponentDeact
   }
 
   public onSubmit(): void {
-    this.apiService
-      .create(this.form.value as PostInputDto)
+    this.postCollection
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .add(this.form.value as any)
       .pipe(first())
       .subscribe({
         next: (post) => {

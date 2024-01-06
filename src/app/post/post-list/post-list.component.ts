@@ -8,6 +8,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  effect,
   inject,
   signal,
 } from '@angular/core';
@@ -19,13 +20,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatSortModule, Sort, SortDirection } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { LocalizeRouterModule } from '@gilsdav/ngx-translate-router';
 import { TranslateModule } from '@ngx-translate/core';
-import { combineLatest, debounceTime, first, switchMap } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { PostListDetailComponent } from 'src/app/shared/components/post-list-detail/post-list-detail.component';
 import { ROUTE_DEFINITION } from 'src/app/shared/constants/route-definition.constant';
 import { PostDeleteDirective } from 'src/app/shared/directives/post-delete.directive';
@@ -33,8 +34,8 @@ import { PostDto } from 'src/app/shared/dto/post.dto';
 import { getParamPage } from 'src/app/shared/rxjs/get-param-page';
 import { getParamQuery } from 'src/app/shared/rxjs/get-param-query';
 import { getParamSort } from 'src/app/shared/rxjs/get-param-sort';
-import { ApiService } from 'src/app/shared/services/api.service';
 import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
+import { PostCollectionService } from '../post-collection.service';
 
 @Component({
   standalone: true,
@@ -77,17 +78,40 @@ export class PostListComponent implements OnInit, OnDestroy {
   public readonly pageSizeOptions = [5, 10, 25, 100];
   public data = signal<PostDto[]>([]);
   public totalCount = signal(0);
-  public query = '';
+
+  public query = signal('');
+  public pageSize = signal(5);
+  public pageIndex = signal(1);
+  public sortBy = signal('id');
+  public sortDirection = signal<SortDirection>('asc');
+
   public expandedElement: PostDto | null = null;
   private destroyRef = inject(DestroyRef);
 
   constructor(
-    private apiService: ApiService,
+    private postCollection: PostCollectionService,
     private cdr: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
     private breadcrumbsPortalService: BreadcrumbsPortalService,
-  ) {}
+  ) {
+    effect(() => {
+      this.postCollection
+        .getAndCountWithQuery({
+          _limit: this.pageSize(),
+          _page: this.pageIndex(),
+          _sort: this.sortBy(),
+          _order: this.sortDirection(),
+          title_like: this.query(),
+        })
+        .pipe(takeUntilDestroyed(this.destroyRef))
+
+        .subscribe((posts) => {
+          this.data.set(posts.items);
+          this.totalCount.set(posts.totalCount);
+        });
+    });
+  }
 
   public ngOnDestroy(): void {
     this.portalContent?.detach();
@@ -96,32 +120,18 @@ export class PostListComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.breadcrumbsPortalService.setPortal(this.portalContent);
 
-    this.route.queryParamMap.pipe(first(), getParamQuery()).subscribe((query) => {
-      this.query = query;
-      this.cdr.markForCheck();
-    });
-
     combineLatest([
       this.route.queryParamMap.pipe(getParamPage()),
       this.route.queryParamMap.pipe(getParamQuery()),
       this.route.queryParamMap.pipe(getParamSort()),
     ])
-      .pipe(
-        debounceTime(500),
-        switchMap(([page, query, sort]) => {
-          return this.apiService.list({
-            page: page.pageIndex,
-            limit: page.pageSize,
-            sort: sort.sortBy,
-            order: sort.sortDirection,
-            query,
-          });
-        }),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe((posts) => {
-        this.data.set(posts.items);
-        this.totalCount.set(posts.totalCount);
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(([page, query, sort]) => {
+        this.query.set(query);
+        this.pageIndex.set(page.pageIndex || 0);
+        this.pageSize.set(page.pageSize || 5);
+        this.sortBy.set(sort.sortBy || 'id');
+        this.sortDirection.set(sort.sortDirection || 'asc');
       });
   }
 
@@ -134,9 +144,13 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   public onPageChange(event: PageEvent): void {
+    let pageIndex = null;
+    if (event.pageSize === this.pageSize()) {
+      pageIndex = event.pageIndex + 1 > 1 ? event.pageIndex + 1 : null;
+    }
     this.setFiltersToRoute({
-      pageIndex: event.pageIndex > 0 ? event.pageIndex : null,
-      pageSize: event.pageSize,
+      pageIndex,
+      pageSize: event.pageSize !== 5 ? event.pageSize : null,
     });
   }
 
@@ -149,7 +163,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   public onQueryRemove(): void {
-    this.query = '';
     this.setFiltersToRoute({
       query: null,
       pageIndex: null,
@@ -157,7 +170,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   public onClear(): void {
-    this.query = '';
     this.setFiltersToRoute({
       query: null,
       pageIndex: null,

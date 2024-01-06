@@ -9,7 +9,7 @@ import { VERSION } from 'src/environments/version';
   standalone: true,
 })
 export class SeoDirective implements OnInit {
-  private readonly siteName = 'CRUD demo';
+  private readonly siteName = 'RxJS demo';
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

@@ -19,8 +19,8 @@ import { ExpandedPostDto } from 'src/app/shared/dto/post.dto';
 import { filterNumber } from 'src/app/shared/rxjs/filter-number';
 import { getParamId } from 'src/app/shared/rxjs/get-param-id';
 import { setInitialIfNotNumber } from 'src/app/shared/rxjs/set-initial-if-not-number';
-import { ApiService } from 'src/app/shared/services/api.service';
 import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
+import { PostCollectionService } from '../post-collection.service';
 
 @Component({
   standalone: true,
@@ -48,7 +48,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   public readonly ROUTE_DEFINITION = ROUTE_DEFINITION;
 
   constructor(
-    private apiService: ApiService,
+    private postCollection: PostCollectionService,
     private route: ActivatedRoute,
     private translate: TranslateService,
     private breadcrumbsPortalService: BreadcrumbsPortalService,
@@ -69,7 +69,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
         getParamId(),
         setInitialIfNotNumber(this.dataSource),
         filterNumber(),
-        switchMap((id) => this.apiService.detailExpanded(Number(id))),
+        switchMap((id) => this.postCollection.getExpanded(id)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
