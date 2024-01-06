@@ -1,0 +1,14 @@
+{
+  "Method not implemented": {
+    "scope": "javascript,typescript",
+    "prefix": "notimpl",
+    "body": ["throw new Error('Method not implemented.');"],
+    "description": "Throw error in method which is not implemented."
+  },
+  "Destroy Ref": {
+    "scope": "typescript",
+    "prefix": "destr",
+    "body": ["private destroyRef = inject(DestroyRef);"],
+    "description": "Destroy ref added."
+  }
+}

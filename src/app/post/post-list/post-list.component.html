@@ -1,0 +1,158 @@
+<mat-form-field class="w-full">
+  <mat-label>{{ 'input.search.label' | translate }}</mat-label>
+  <input
+    matInput
+    (input)="onQueryChange($event)"
+    [placeholder]="'input.search.placeholder' | translate"
+    [(ngModel)]="query"
+  />
+  @if (query) {
+    <button
+      matSuffix
+      mat-icon-button
+      [attr.aria-label]="'uni.clear' | translate"
+      (click)="onQueryRemove()"
+      [matTooltip]="'uni.clear' | translate"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+</mat-form-field>
+
+<div class="flex items-end justify-end gap-2">
+  <button mat-button (click)="onClear()">{{ 'uni.clear-filters' | translate }}</button>
+
+  <a mat-button [routerLink]="['/' + ROUTE_DEFINITION.POSTS.CREATE | localize]">{{ 'uni.create' | translate }}</a>
+</div>
+
+<table
+  mat-table
+  [fixedLayout]="true"
+  [dataSource]="data()"
+  matSort
+  matSortActive="id"
+  matSortDirection="asc"
+  matSortDisableClear
+  multiTemplateDataRows
+  [trackBy]="trackByPostId"
+  (matSortChange)="onSortChange($event)"
+>
+  <colgroup>
+    <col width="120" />
+    <col width="auto" />
+    <col width="50" />
+    <col width="50" />
+  </colgroup>
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>{{ 'table.posts.id.title' | translate }}</th>
+    <td mat-cell *matCellDef="let row">
+      {{ '#' + row.id }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="userId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+      {{ 'table.posts.user-id.title' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let row">{{ '#' + row.userId }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>{{ 'table.posts.title.title' | translate }}</th>
+    <td mat-cell *matCellDef="let row" class="font-bold">{{ row.title }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="body">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>{{ 'table.posts.body.title' | translate }}</th>
+    <td mat-cell *matCellDef="let row">{{ row.body }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item [routerLink]="['/' | localize, row.id]">
+          <mat-icon>info</mat-icon>
+          <span>{{ 'uni.detail' | translate }}</span>
+        </a>
+        <a mat-menu-item [routerLink]="['/' + row.id + '/' + ROUTE_DEFINITION.POSTS.EDIT | localize]">
+          <mat-icon>edit</mat-icon>
+          <span>{{ 'uni.edit' | translate }}</span>
+        </a>
+        <button mat-menu-item [appPostDelete]="row.id" (deleted)="onDeleted(row.id)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ 'uni.delete' | translate }}</span>
+        </button>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button aria-label="expand row" (click)="onExpand($event, element)">
+        @if (expandedElement === element) {
+          <mat-icon>keyboard_arrow_up</mat-icon>
+        } @else {
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        }
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsExpanded.length">
+      <div [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+        @if (expandedElement === element) {
+          <div [class.my-2]="element === expandedElement">
+            <app-post-list-detail [id]="element.userId">
+              <table>
+                <colgroup>
+                  <col width="120" />
+                  <col />
+                </colgroup>
+                <tbody>
+                  <tr class="align-baseline">
+                    <td class="font-bold">{{ 'table.posts.id.title' | translate }}</td>
+                    <td>{{ '#' + element.id }}</td>
+                  </tr>
+                  <tr class="align-baseline">
+                    <td class="font-bold">{{ 'table.posts.user-id.title' | translate }}</td>
+                    <td>{{ '#' + element.userId }}</td>
+                  </tr>
+                  <tr class="align-baseline">
+                    <td class="font-bold">{{ 'table.posts.title.title' | translate }}</td>
+                    <td>{{ element.title }}</td>
+                  </tr>
+                  <tr class="align-baseline">
+                    <td class="font-bold">{{ 'table.posts.body.title' | translate }}</td>
+                    <td>{{ element.body }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </app-post-list-detail>
+          </div>
+        }
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsExpanded"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsExpanded"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expandable-row"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="pageSizeOptions"
+  [length]="totalCount()"
+  (page)="onPageChange($event)"
+  aria-label="Select page of posts"
+></mat-paginator>
+
+<div *cdkPortal class="container py-4">
+  <a mat-button color="primary" [routerLink]="['/' | localize]">{{ 'breadcrumbs.app.posts' | translate }}</a>
+</div>
