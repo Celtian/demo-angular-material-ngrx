@@ -16,6 +16,10 @@ import { routes } from './app.routes';
 import { CustomErrorHandlerService } from './shared/services/custom-error-handler.service';
 import { CustomTitleStrategyService } from './shared/services/custom-title-strategy.service';
 import { MatPaginationIntlService } from './shared/services/mat-paginator-intl.service';
+import { provideStore } from '@ngrx/store';
+import { provideEntityData, withEffects } from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
+import { provideEffects } from '@ngrx/effects';
 
 registerLocaleData(localeCs, 'cs-CS');
 
@@ -40,5 +44,8 @@ export const appConfig: ApplicationConfig = {
       provide: MatPaginatorIntl,
       useClass: MatPaginationIntlService,
     },
+    provideStore(),
+    provideEntityData(entityConfig, withEffects()),
+    provideEffects(),
   ],
 };
