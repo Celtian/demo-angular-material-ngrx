@@ -6,10 +6,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LocalizeRouterModule, LocalizeRouterService } from '@gilsdav/ngx-translate-router';
+import { Store } from '@ngrx/store';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { delay, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
+import { selectPostId } from 'src/app/router.selectors';
 import { DataSource } from 'src/app/shared/classes/data-source';
 import { UserInfoComponent } from 'src/app/shared/components/user-info/user-info.component';
 import { DEFAULT_EXPANDED_POST } from 'src/app/shared/constants/post.constant';
@@ -17,7 +19,6 @@ import { ROUTE_DEFINITION } from 'src/app/shared/constants/route-definition.cons
 import { PostDeleteDirective } from 'src/app/shared/directives/post-delete.directive';
 import { ExpandedPostDto } from 'src/app/shared/dto/post.dto';
 import { filterNumber } from 'src/app/shared/rxjs/filter-number';
-import { getParamId } from 'src/app/shared/rxjs/get-param-id';
 import { setInitialIfNotNumber } from 'src/app/shared/rxjs/set-initial-if-not-number';
 import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
 import { PostCollectionService } from '../post-collection.service';
@@ -49,11 +50,11 @@ export class PostDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private postCollection: PostCollectionService,
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private breadcrumbsPortalService: BreadcrumbsPortalService,
     private lr: LocalizeRouterService,
     private router: Router,
+    private store: Store,
   ) {}
 
   public ngOnDestroy(): void {
@@ -63,10 +64,9 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.breadcrumbsPortalService.setPortal(this.portalContent);
 
-    this.route.paramMap
+    this.store
+      .select(selectPostId)
       .pipe(
-        delay(500),
-        getParamId(),
         setInitialIfNotNumber(this.dataSource),
         filterNumber(),
         switchMap((id) => this.postCollection.getExpanded(id)),

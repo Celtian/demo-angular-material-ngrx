@@ -3011,6 +3011,13 @@
   dependencies:
     tslib "^2.3.0"
 
+"@ngrx/router-store@^17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-17.0.1.tgz#be6547aac1a8aa92cc0da4cd7e8d1416ad84fb29"
+  integrity sha512-O4kz/yvIaAfG0Hzloj24RqL17E1oddQ7wpxjU6UrTr/oZkX1/lIehaSxSJIVzq02vQWShIq0RFo/t8ac5mzqZQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngrx/store-devtools@^17.0.1":
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-17.0.1.tgz#42824879bcdccba5db83345318a5262a4a2789b7"

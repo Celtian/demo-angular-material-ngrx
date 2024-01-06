@@ -9,10 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LocalizeRouterModule, LocalizeRouterService } from '@gilsdav/ngx-translate-router';
+import { Store } from '@ngrx/store';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Observable, delay, first, switchMap } from 'rxjs';
+import { Observable, first, switchMap } from 'rxjs';
+import { selectPostId } from 'src/app/router.selectors';
 import { DataSource } from 'src/app/shared/classes/data-source';
 import { DEFAULT_POST } from 'src/app/shared/constants/post.constant';
 import { ROUTE_DEFINITION } from 'src/app/shared/constants/route-definition.constant';
@@ -20,7 +22,6 @@ import { PostDeleteDirective } from 'src/app/shared/directives/post-delete.direc
 import { PostDto } from 'src/app/shared/dto/post.dto';
 import { CanComponentDeactivate } from 'src/app/shared/guards/can-deactivate-guard.service';
 import { filterNumber } from 'src/app/shared/rxjs/filter-number';
-import { getParamId } from 'src/app/shared/rxjs/get-param-id';
 import { setInitialIfNotNumber } from 'src/app/shared/rxjs/set-initial-if-not-number';
 import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
 import { CustomConfirmDialog, CustomConfirmDialogService } from 'src/app/shared/services/custom-confirm-dialog.service';
@@ -59,7 +60,6 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
 
   constructor(
     private postCollection: PostCollectionService,
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private breadcrumbsPortalService: BreadcrumbsPortalService,
     private fb: FormBuilder,
@@ -67,6 +67,7 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
     private lr: LocalizeRouterService,
     private confirm: CustomConfirmDialogService,
     private router: Router,
+    private store: Store,
   ) {}
 
   public canDeactivate(): boolean | Observable<boolean> {
@@ -76,10 +77,9 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
   public ngOnInit(): void {
     this.breadcrumbsPortalService.setPortal(this.portalContent);
 
-    this.route.paramMap
+    this.store
+      .select(selectPostId)
       .pipe(
-        delay(500),
-        getParamId(),
         setInitialIfNotNumber(this.dataSource),
         filterNumber(),
         switchMap((id) => this.postCollection.getByKey(id)),

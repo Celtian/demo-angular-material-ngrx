@@ -23,17 +23,16 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSortModule, Sort, SortDirection } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
+import { Params, Router, RouterLink } from '@angular/router';
 import { LocalizeRouterModule } from '@gilsdav/ngx-translate-router';
+import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
-import { combineLatest, debounceTime } from 'rxjs';
+import { debounceTime } from 'rxjs';
+import { selectPaginationParams } from 'src/app/router.selectors';
 import { PostListDetailComponent } from 'src/app/shared/components/post-list-detail/post-list-detail.component';
 import { ROUTE_DEFINITION } from 'src/app/shared/constants/route-definition.constant';
 import { PostDeleteDirective } from 'src/app/shared/directives/post-delete.directive';
 import { PostDto } from 'src/app/shared/dto/post.dto';
-import { getParamPage } from 'src/app/shared/rxjs/get-param-page';
-import { getParamQuery } from 'src/app/shared/rxjs/get-param-query';
-import { getParamSort } from 'src/app/shared/rxjs/get-param-sort';
 import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
 import { PostCollectionService } from '../post-collection.service';
 
@@ -91,9 +90,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(
     private postCollection: PostCollectionService,
     private cdr: ChangeDetectorRef,
-    private router: Router,
-    private route: ActivatedRoute,
     private breadcrumbsPortalService: BreadcrumbsPortalService,
+    private router: Router,
+    private store: Store,
   ) {
     effect(() => {
       this.postCollection
@@ -120,18 +119,15 @@ export class PostListComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.breadcrumbsPortalService.setPortal(this.portalContent);
 
-    combineLatest([
-      this.route.queryParamMap.pipe(getParamPage()),
-      this.route.queryParamMap.pipe(getParamQuery()),
-      this.route.queryParamMap.pipe(getParamSort()),
-    ])
+    this.store
+      .select(selectPaginationParams)
       .pipe(debounceTime(1000), takeUntilDestroyed(this.destroyRef))
-      .subscribe(([page, query, sort]) => {
+      .subscribe(({ query, pageIndex, pageSize, sortBy, sortDirection }) => {
         this.query.set(query);
-        this.pageIndex.set(page.pageIndex || 1);
-        this.pageSize.set(page.pageSize || 5);
-        this.sortBy.set(sort.sortBy || 'id');
-        this.sortDirection.set(sort.sortDirection || 'asc');
+        this.pageIndex.set(pageIndex);
+        this.pageSize.set(pageSize);
+        this.sortBy.set(sortBy);
+        this.sortDirection.set(sortDirection);
       });
   }
 

@@ -10,7 +10,9 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/mater
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultDataServiceConfig, DefaultDataServiceFactory, provideEntityData, withEffects } from '@ngrx/data';
 import { provideEffects } from '@ngrx/effects';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAppVersion } from 'ngx-app-version';
 import { provideFixedFooter } from 'ngx-fixed-footer';
 import { provideTranslateVersion } from 'ngx-translate-version';
@@ -21,7 +23,6 @@ import { CustomDefaultDataServiceFactory } from './shared/services/custom-defaul
 import { CustomErrorHandlerService } from './shared/services/custom-error-handler.service';
 import { CustomTitleStrategyService } from './shared/services/custom-title-strategy.service';
 import { MatPaginationIntlService } from './shared/services/mat-paginator-intl.service';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 registerLocaleData(localeCs, 'cs-CS');
 
@@ -59,7 +60,10 @@ export const appConfig: ApplicationConfig = {
       provide: DefaultDataServiceFactory,
       useClass: CustomDefaultDataServiceFactory,
     },
-    provideStore(),
+    provideStore({
+      router: routerReducer,
+    }),
+    provideRouterStore(),
     provideEffects(),
     provideEntityData(entityConfig, withEffects()),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),

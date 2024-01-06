@@ -1,4 +1,4 @@
-import { ParamMap } from '@angular/router';
+import { Params } from '@angular/router';
 import { OperatorFunction, map } from 'rxjs';
 
 interface GetParamPage {
@@ -6,12 +6,12 @@ interface GetParamPage {
   pageSize: number;
 }
 
-export const getParamPage = (): OperatorFunction<ParamMap, GetParamPage> => {
+export const getParamPage = (): OperatorFunction<Params, GetParamPage> => {
   return (input$) => {
     return input$.pipe(
       map((params) => {
-        const pageIndex = params.get('pageIndex');
-        const pageSize = params.get('pageSize');
+        const pageIndex = params['pageIndex'];
+        const pageSize = params['pageSize'];
         return {
           pageIndex: pageIndex ? +pageIndex : 1,
           pageSize: pageSize ? +pageSize : 5,

@@ -1,11 +1,11 @@
-import { ParamMap } from '@angular/router';
+import { Params } from '@angular/router';
 import { OperatorFunction, map } from 'rxjs';
 
-export const getParamQuery = (): OperatorFunction<ParamMap, string> => {
+export const getParamQuery = (): OperatorFunction<Params, string> => {
   return (input$) => {
     return input$.pipe(
       map((params) => {
-        return params.get('query') || '';
+        return params['query'] || '';
       }),
     );
   };
