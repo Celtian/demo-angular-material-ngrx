@@ -1,0 +1,175 @@
+{
+  "breadcrumbs": {
+    "app": {
+      "posts": "Příspěvky"
+    },
+    "posts": {
+      "create": "Vytvořit",
+      "edit": "Upravit"
+    }
+  },
+  "custom-confirm-dialog": {
+    "default": {
+      "content": "Opravdu chcete potvrdit operaci?",
+      "title": "Potvrzení operace"
+    },
+    "delete-post": {
+      "content": "Opravdu chcete smazat příspěvek?",
+      "title": "Mazání příspěvku"
+    },
+    "unsaved-work": {
+      "content": "Opravdu chcete opustit tuto stránku?",
+      "title": "Neuložená práce"
+    }
+  },
+  "error": {
+    "post-was-not-found": "Příspěvek nebyl nalezen",
+    "unexpected-exception": "Neočekávaná chyba"
+  },
+  "footer": {
+    "content": "Všechna práva vyhrazena © {{ endYear }}"
+  },
+  "form": {
+    "post": {
+      "body": {
+        "label": "Obsah",
+        "placeholder": "Napiště něco zde…"
+      },
+      "title": {
+        "label": "Název"
+      }
+    }
+  },
+  "input": {
+    "search": {
+      "label": "Vyhledávání",
+      "placeholder": "Začněte zde psát…"
+    }
+  },
+  "mat-paginator": {
+    "first-page": "První stránka",
+    "items-per-page": "Položek na stránku",
+    "last-page": "Poslední stránka",
+    "next-page": "Další stránka",
+    "of": "z",
+    "previous-page": "Předchozí stránka"
+  },
+  "not-found": {
+    "content": "Stránka nebyla nalezena"
+  },
+  "post-detail": {
+    "about-author": "O autorovi",
+    "about-post": "Obsah příspěvku",
+    "user": {
+      "address": "Adresa",
+      "company": "Společnost",
+      "email": "Email",
+      "id": "ID",
+      "name": "Jméno",
+      "phone": "Telefon",
+      "username": "Uživatelské jméno",
+      "website": "Web"
+    }
+  },
+  "response": {
+    "create": {
+      "failed": "Vytváření se nezdařilo",
+      "success": "Úspěšně vytvořeno"
+    },
+    "delete": {
+      "failed": "Mazání se nezdařilo",
+      "success": "Úspěšně smazáno"
+    },
+    "update": {
+      "failed": "Ukládání se nezdařilo",
+      "success": "Úspěšně uloženo"
+    }
+  },
+  "routes": {
+    "app": {
+      "not-found": "nenalezeno",
+      "posts": "prispevky"
+    },
+    "posts": {
+      "create": "vytvorit",
+      "detail": "detail",
+      "edit": "upravit"
+    }
+  },
+  "seo": {
+    "app": {
+      "not-found": {
+        "description": "Tato stránka nebyla nalezena",
+        "title": "Stránka nebyla nalezena"
+      },
+      "posts": {
+        "description": "Seznam příspěvků",
+        "title": "Seznam příspěvků"
+      }
+    },
+    "posts": {
+      "create": {
+        "description": "Vytvořit příspěvek",
+        "title": "Vytvořit příspěvek"
+      },
+      "detail": {
+        "description": "Detail příspěvku",
+        "title": "Detail příspěvku"
+      },
+      "edit": {
+        "description": "Upravit příspěvek",
+        "title": "Upravit příspěvek"
+      }
+    }
+  },
+  "table": {
+    "posts": {
+      "body": {
+        "title": "Obsah"
+      },
+      "id": {
+        "title": "ID"
+      },
+      "title": {
+        "title": "Název"
+      },
+      "user-id": {
+        "title": "Uživatel"
+      }
+    }
+  },
+  "titles": {
+    "action": {
+      "create": "vytvořit",
+      "detail": "detail",
+      "edit": "upravit",
+      "list": "seznam"
+    },
+    "section": {
+      "not-found": "nenalezeno",
+      "posts": "příspěvky"
+    }
+  },
+  "uni": {
+    "aria-label": {
+      "arrow-icon": "Ikona šipky",
+      "error-icon": "Ikona chyby",
+      "expand-row": "rozbalit řádek",
+      "row-actions": "akce",
+      "select-page-of-posts": "Vyberte stránku příspěvků",
+      "show-actions": "Show actions",
+      "warning-icon": "Ikona varování"
+    },
+    "clear": "Vymazat",
+    "clear-filters": "Vymazat filtry",
+    "close": "Zavřít",
+    "create": "Vytvořit",
+    "delete": "Smazat",
+    "detail": "Detail",
+    "edit": "Upravit",
+    "no": "Ne",
+    "reset": "Resetovat",
+    "submit": "Potvrdit",
+    "yes": "Ano"
+  }
+}
