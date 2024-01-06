@@ -128,7 +128,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([page, query, sort]) => {
         this.query.set(query);
-        this.pageIndex.set(page.pageIndex || 0);
+        this.pageIndex.set(page.pageIndex || 1);
         this.pageSize.set(page.pageSize || 5);
         this.sortBy.set(sort.sortBy || 'id');
         this.sortDirection.set(sort.sortDirection || 'asc');
