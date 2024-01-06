@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "private": true,
-  "description": "Demo of angular material ngrx operations",
+  "description": "Demo of Angular and NgRx",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
