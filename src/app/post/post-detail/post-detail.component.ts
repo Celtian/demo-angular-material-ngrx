@@ -24,7 +24,6 @@ import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-po
 import { PostCollectionService } from '../post-collection.service';
 
 @Component({
-  standalone: true,
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss',

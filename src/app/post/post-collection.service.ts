@@ -35,8 +35,8 @@ export class PostCollectionService extends EntityCollectionServiceBase<PostDto> 
   public getExpanded(key: number) {
     return this.postData.getExpandedById(key).pipe(
       tap((result) => {
-        this.addOneToCache(result);
-        this.userCollection.addOneToCache(result.user);
+        this.addOneToCache(result, { mergeStrategy: MergeStrategy.IgnoreChanges });
+        this.userCollection.addOneToCache(result.user, { mergeStrategy: MergeStrategy.IgnoreChanges });
       }),
     );
   }

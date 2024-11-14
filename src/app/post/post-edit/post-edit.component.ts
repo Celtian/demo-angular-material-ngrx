@@ -28,7 +28,6 @@ import { CustomConfirmDialog, CustomConfirmDialogService } from 'src/app/shared/
 import { PostCollectionService } from '../post-collection.service';
 
 @Component({
-  standalone: true,
   selector: 'app-post-edit',
   templateUrl: './post-edit.component.html',
   styleUrl: './post-edit.component.scss',
