@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory, QueryParams } from '@ngrx/data';
+import {
+  EntityCollectionServiceBase,
+  EntityCollectionServiceElementsFactory,
+  MergeStrategy,
+  QueryParams,
+} from '@ngrx/data';
 import { HttpOptions } from '@ngrx/data/src/dataservices/interfaces';
 import { Observable, tap } from 'rxjs';
 import { PostDto } from '../shared/dto/post.dto';
@@ -24,7 +29,7 @@ export class PostCollectionService extends EntityCollectionServiceBase<PostDto> 
   ): Observable<{ items: PostDto[]; totalCount: number }> {
     return this.postData
       .getAndCountWithQuery(queryParams, options)
-      .pipe(tap((data) => this.addManyToCache(data.items)));
+      .pipe(tap((data) => this.addManyToCache(data.items, { mergeStrategy: MergeStrategy.IgnoreChanges })));
   }
 
   public getExpanded(key: number) {

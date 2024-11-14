@@ -25,19 +25,22 @@ export class PostListDetailComponent {
     private userCollection: UserCollectionService,
     private translate: TranslateService,
   ) {
-    effect(() => {
-      this.userCollection
-        .getByKey(this.id())
-        .pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: (res) => {
-            this.dataSource.setData(res);
-          },
-          error: () => {
-            const error = this.translate.instant('error.unexpected-exception');
-            this.dataSource.setError(error);
-          },
-        });
-    });
+    effect(
+      () => {
+        this.userCollection
+          .getByKey(this.id())
+          .pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (res) => {
+              this.dataSource.setData(res);
+            },
+            error: () => {
+              const error = this.translate.instant('error.unexpected-exception');
+              this.dataSource.setError(error);
+            },
+          });
+      },
+      { allowSignalWrites: true },
+    );
   }
 }

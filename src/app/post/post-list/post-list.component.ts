@@ -104,7 +104,6 @@ export class PostListComponent implements OnInit, OnDestroy {
           title_like: this.query(),
         })
         .pipe(takeUntilDestroyed(this.destroyRef))
-
         .subscribe((posts) => {
           this.data.set(posts.items);
           this.totalCount.set(posts.totalCount);
