@@ -2371,17 +2371,17 @@
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-19.1.7.tgz#a1c06a0bc0e666551ff15292f2833be2fd7f1c83"
   integrity sha512-U39LVqHWj+GtKzBA3+AseHZgLPlL5YE/iRkZJ4PHQVrgW9LtyMzPuUmnW+e0XQwPFHq9xQxaoj3w8gApj4/MIg==
 
-"@ngx-translate/core@^16.0.3":
-  version "16.0.3"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-16.0.3.tgz#e98a96ff05963ea65d548516820c96a2a743b390"
-  integrity sha512-UPse66z9tRUmIpeorYodXBQY6O4foUmj9jy9cCuuja7lqdOwRBWPzCWqc+qYIXv5L2QoqZdxgHtqoUz+Q9weSA==
+"@ngx-translate/core@^16.0.4":
+  version "16.0.4"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-16.0.4.tgz#8e17d6ed6b306803ed2eb19ab72a0fdb697f1d76"
+  integrity sha512-s8llTL2SJvROhqttxvEs7Cg+6qSf4kvZPFYO+cTOY1d8DWTjlutRkWAleZcPPoeX927Dm7ALfL07G7oYDJ7z6w==
   dependencies:
     tslib "^2.3.0"
 
-"@ngx-translate/http-loader@^16.0.0":
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-16.0.0.tgz#d1f91a1824f6440be468a496832fe50f58151356"
-  integrity sha512-l3okOHGVxZ1Bm55OpakSfXvI2yYmVmhYqgwGU4aIQIRUqpkBCrSDZnmrHTcZfsGJzXKB5E2D2rko9i28gBijmA==
+"@ngx-translate/http-loader@^16.0.1":
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-16.0.1.tgz#01219d623ea810fd36ba2911d1452975cd32a041"
+  integrity sha512-xJEOUpvs6Zfc8G4cmQmegFOEpfYSoplTHHoisPNrATXjRBjpaKsBaPOXlZsuFUW2XV00s16gIyI4+9z1XkO5bw==
   dependencies:
     tslib "^2.3.0"
 
@@ -3201,10 +3201,10 @@
     "@typescript-eslint/types" "8.14.0"
     eslint-visitor-keys "^3.4.3"
 
-"@vendure/ngx-translate-extract@^9.2.1":
-  version "9.2.1"
-  resolved "https://registry.yarnpkg.com/@vendure/ngx-translate-extract/-/ngx-translate-extract-9.2.1.tgz#fa0cc186fc30c5bfcbdd2a023a71014bf8ed79e7"
-  integrity sha512-3empvzbVC0MY9hXlqU6wXYQuy4L5UIDDqChATzfagdP7bazyZRhLN2Wes7RmOtucXotB1VFgjZ7Fbbp0Tepxiw==
+"@vendure/ngx-translate-extract@^9.4.0":
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/@vendure/ngx-translate-extract/-/ngx-translate-extract-9.4.0.tgz#d1ebe8f1861d5b62497660a564109e0c1fddd2e4"
+  integrity sha512-2+Blsm33Ub3cQ0K6dLQWlCg3QfHJIvkUS7vovq39At+lU+VSqMNvVpRkqNrsV9sTpYeyZzVtGOqHW5Xa1YwkAw==
   dependencies:
     "@phenomnomnominal/tsquery" "^6.1.3"
     braces "^3.0.2"
@@ -6878,26 +6878,26 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-ngx-app-version@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/ngx-app-version/-/ngx-app-version-1.2.3.tgz#39802d93aa37283ffa0066eb849bd6b3045ed23d"
-  integrity sha512-qi0Y3b0eHeHNoF+yNJAnCtsfOas5Xk4v/HzjrXFnLqOeBBHwetdijTtJZbo4jIeZimEuhF3T1N14Lbn0gyo4qw==
+ngx-app-version@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-app-version/-/ngx-app-version-2.0.0.tgz#71d9936b828ca9265d3abe031cd99b38a740243b"
+  integrity sha512-4MLrLzbQzQ/Qm2ELkFAdDn9stfb89zW/HvGckoFkJOOIUBg5qYPI0Kbf0q5ZdAau0L8/+jZTXzzfHMjfsOjP6Q==
   dependencies:
     tslib "^2.3.0"
 
-ngx-devkit-builders@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/ngx-devkit-builders/-/ngx-devkit-builders-1.3.2.tgz#9d4d8600f79657ad0595c40b96a758d4a19ccd63"
-  integrity sha512-Vl/+7ayTGIP23CPmR8SY4ydxOl1Dip7LXUDaoayIynYRrnbZtToqXo/gRSSF5ffjggOnJrwG7Hw4pDlx4hs8Jw==
+ngx-devkit-builders@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/ngx-devkit-builders/-/ngx-devkit-builders-1.3.3.tgz#c097d8ed4dcfaa33d255662f0b8d28377fbf6b68"
+  integrity sha512-0JMginAfMQLE3SUFzk0jQyHHP/fRJupDjDIY8nHv8egr4gJI7esAx+RSWEW5VVzVOGDvscc9fIWyI7VjxzzALg==
   dependencies:
     "@angular-devkit/architect" "^0.1802.9"
     "@angular-devkit/core" "^18.2.9"
     fs-extra "^11.2.0"
 
-ngx-fixed-footer@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-fixed-footer/-/ngx-fixed-footer-3.0.1.tgz#f71bcfa79afff963bbe9eaab95f8f5a1b48b49ff"
-  integrity sha512-HLVqAKuLMuTTRPY8LRd4oMjjibRzlaJbzlKxTkr9VEnpp10XpjasuOEq2WJh+jdO/TTTN6gWxd2oq6eiFBqZtQ==
+ngx-fixed-footer@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ngx-fixed-footer/-/ngx-fixed-footer-3.2.0.tgz#d429a45d82b8f04a6e9070024bba11e54c3f07e3"
+  integrity sha512-esXizCPg1Hp1j7lpe1cF1UMTRlRQXrceFWhJN1L4IVGPQtOABCmD7zeXSiSzx3Cobn1ccjQUSLaE0bplqzHuwQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -6910,10 +6910,10 @@ ngx-i18n-extract-regex-cli@^0.0.12:
     fs-extra "^11.2.0"
     glob "^11.0.0"
 
-ngx-translate-version@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-translate-version/-/ngx-translate-version-3.0.0.tgz#3fd1b1034a25910e031cf72aa74c8488bc97b2d8"
-  integrity sha512-Eyk7CpCN4ILtgh0iARP9qd6+qDIEWROkvdA9iFN2UQAfoTcRuUIdfmP5vqT4OKgsBA+qJat5ogzyRFPZeXC6rg==
+ngx-translate-version@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-translate-version/-/ngx-translate-version-4.0.0.tgz#9a47137e7dc7afc52c2aa94b1e7e90c962165665"
+  integrity sha512-87qG4SJ2Es0vDwXdLY8HbgrmR6TVszBHVVMcSCt+yiVHxkRA0nIvxfVh9sp4kFQwAmpR9rHT7RusexvKQ312lg==
   dependencies:
     tslib "^2.3.0"
 
