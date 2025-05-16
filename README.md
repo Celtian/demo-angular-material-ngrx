@@ -3,7 +3,7 @@
 ## 🗎 Description
 
 - Standards: HTML5, CSS3
-- Components: Angular 19, Angular Material, Tailwind CSS
+- Components: Angular 20, Angular Material, Tailwind CSS
 - Software: Visual Studio Code
 - See [Humans.txt](https://celtian.github.io/demo-angular-material-ngrx/humans.txt)
 - Api taken from [here](https://jsonplaceholder.typicode.com)
@@ -11,7 +11,7 @@
 
 ## 🛠️ Instalation
 
-Definitelly works with Node `v22.2.0` & yarn `1.22.21`
+Definitelly works with Node `v24.0.2` & yarn `1.22.21`
 
 ```
 yarn install
