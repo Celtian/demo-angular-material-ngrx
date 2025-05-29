@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
+  HttpOptions,
   MergeStrategy,
   QueryParams,
 } from '@ngrx/data';
-import { HttpOptions } from '@ngrx/data/src/dataservices/interfaces';
 import { Observable, tap } from 'rxjs';
 import { PostDto } from '../shared/dto/post.dto';
 import { PostDataService } from './post-data.service';

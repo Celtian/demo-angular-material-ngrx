@@ -4,10 +4,11 @@ import {
   DefaultDataService,
   DefaultDataServiceConfig,
   DefaultDataServiceFactory,
+  EntityCollectionDataService,
+  HttpOptions,
   HttpUrlGenerator,
   QueryParams,
 } from '@ngrx/data';
-import { EntityCollectionDataService, HttpOptions } from '@ngrx/data/src/dataservices/interfaces';
 import { Observable, map } from 'rxjs';
 
 export class CustomDefaultDataService<T> extends DefaultDataService<T> {
