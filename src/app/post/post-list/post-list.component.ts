@@ -7,10 +7,10 @@ import {
   DestroyRef,
   OnDestroy,
   OnInit,
-  ViewChild,
   effect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -68,7 +68,13 @@ import { PostCollectionService } from '../post-collection.service';
   ],
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  @ViewChild(CdkPortal, { static: true }) public portalContent!: CdkPortal;
+  private postCollection = inject(PostCollectionService);
+  private cdr = inject(ChangeDetectorRef);
+  private breadcrumbsPortalService = inject(BreadcrumbsPortalService);
+  private router = inject(Router);
+  private store = inject(Store);
+
+  public readonly portalContent = viewChild.required(CdkPortal);
 
   public readonly ROUTE_DEFINITION = ROUTE_DEFINITION;
   public readonly displayedColumns: string[] = ['id', 'title', 'actions'];
@@ -86,13 +92,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   public expandedElement: PostDto | null = null;
   private destroyRef = inject(DestroyRef);
 
-  constructor(
-    private postCollection: PostCollectionService,
-    private cdr: ChangeDetectorRef,
-    private breadcrumbsPortalService: BreadcrumbsPortalService,
-    private router: Router,
-    private store: Store,
-  ) {
+  constructor() {
     effect(() => {
       this.postCollection
         .getAndCountWithQuery({
@@ -111,11 +111,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.portalContent?.detach();
+    this.portalContent()?.detach();
   }
 
   public ngOnInit(): void {
-    this.breadcrumbsPortalService.setPortal(this.portalContent);
+    this.breadcrumbsPortalService.setPortal(this.portalContent());
 
     this.store
       .select(selectPaginationParams)

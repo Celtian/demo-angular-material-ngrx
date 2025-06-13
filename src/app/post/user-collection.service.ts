@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { UserDto } from '../shared/dto/user.dto';
 
@@ -6,7 +6,9 @@ import { UserDto } from '../shared/dto/user.dto';
   providedIn: 'root',
 })
 export class UserCollectionService extends EntityCollectionServiceBase<UserDto> {
-  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+  constructor() {
+    const serviceElementsFactory = inject(EntityCollectionServiceElementsFactory);
+
     super('Users', serviceElementsFactory);
   }
 }

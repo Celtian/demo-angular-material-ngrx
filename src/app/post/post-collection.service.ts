@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
@@ -15,11 +15,12 @@ import { UserCollectionService } from './user-collection.service';
   providedIn: 'root',
 })
 export class PostCollectionService extends EntityCollectionServiceBase<PostDto> {
-  constructor(
-    private postData: PostDataService,
-    private userCollection: UserCollectionService,
-    serviceElementsFactory: EntityCollectionServiceElementsFactory,
-  ) {
+  private postData = inject(PostDataService);
+  private userCollection = inject(UserCollectionService);
+
+  constructor() {
+    const serviceElementsFactory = inject(EntityCollectionServiceElementsFactory);
+
     super('Posts', serviceElementsFactory);
   }
 

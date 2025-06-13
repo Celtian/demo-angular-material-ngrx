@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   DefaultDataService,
   DefaultDataServiceConfig,
@@ -40,12 +40,20 @@ export class CustomDefaultDataService<T> extends DefaultDataService<T> {
 
 @Injectable()
 export class CustomDefaultDataServiceFactory extends DefaultDataServiceFactory {
-  constructor(
-    protected override http: HttpClient,
-    protected override httpUrlGenerator: HttpUrlGenerator,
-    @Optional() protected override config?: DefaultDataServiceConfig,
-  ) {
+  protected override http: HttpClient;
+  protected override httpUrlGenerator: HttpUrlGenerator;
+  protected override config?: DefaultDataServiceConfig;
+
+  constructor() {
+    const http = inject(HttpClient);
+    const httpUrlGenerator = inject(HttpUrlGenerator);
+    const config = inject(DefaultDataServiceConfig, { optional: true }) ?? undefined;
+
     super(http, httpUrlGenerator, config);
+
+    this.http = http;
+    this.httpUrlGenerator = httpUrlGenerator;
+    this.config = config;
   }
 
   override create<T>(entityName: string): EntityCollectionDataService<T> {

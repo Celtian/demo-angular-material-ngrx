@@ -16,14 +16,14 @@ import { UserInfoComponent } from '../user-info/user-info.component';
   imports: [UserInfoComponent, TranslateModule],
 })
 export class PostListDetailComponent {
+  private userCollection = inject(UserCollectionService);
+  private translate = inject(TranslateService);
+
   public id = input.required<number>();
   private destroyRef = inject(DestroyRef);
   public dataSource = new DataSource<UserDto>(DEFAULT_USER);
 
-  constructor(
-    private userCollection: UserCollectionService,
-    private translate: TranslateService,
-  ) {
+  constructor() {
     effect(
       () => {
         this.userCollection

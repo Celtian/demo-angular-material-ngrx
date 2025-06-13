@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DefaultDataServiceConfig, HttpUrlGenerator } from '@ngrx/data';
 import { Observable } from 'rxjs';
 import { ExpandedPostDto, PostDto } from '../shared/dto/post.dto';
@@ -9,7 +9,11 @@ import { CustomDefaultDataService } from '../shared/services/custom-default-data
   providedIn: 'root',
 })
 export class PostDataService extends CustomDefaultDataService<PostDto> {
-  constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator, config?: DefaultDataServiceConfig) {
+  constructor() {
+    const http = inject(HttpClient);
+    const httpUrlGenerator = inject(HttpUrlGenerator);
+    const config = inject(DefaultDataServiceConfig);
+
     super('Posts', http, httpUrlGenerator, config);
   }
 

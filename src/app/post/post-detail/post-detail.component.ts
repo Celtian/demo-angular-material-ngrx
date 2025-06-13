@@ -1,7 +1,7 @@
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { UpperCasePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, OnInit, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -42,26 +42,24 @@ import { PostCollectionService } from '../post-collection.service';
   ],
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
-  @ViewChild(CdkPortal, { static: true }) public portalContent!: CdkPortal;
+  private postCollection = inject(PostCollectionService);
+  private translate = inject(TranslateService);
+  private breadcrumbsPortalService = inject(BreadcrumbsPortalService);
+  private lr = inject(LocalizeRouterService);
+  private router = inject(Router);
+  private store = inject(Store);
+
+  public readonly portalContent = viewChild.required(CdkPortal);
   private destroyRef = inject(DestroyRef);
   public dataSource = new DataSource<ExpandedPostDto>(DEFAULT_EXPANDED_POST);
   public readonly ROUTE_DEFINITION = ROUTE_DEFINITION;
 
-  constructor(
-    private postCollection: PostCollectionService,
-    private translate: TranslateService,
-    private breadcrumbsPortalService: BreadcrumbsPortalService,
-    private lr: LocalizeRouterService,
-    private router: Router,
-    private store: Store,
-  ) {}
-
   public ngOnDestroy(): void {
-    this.portalContent?.detach();
+    this.portalContent()?.detach();
   }
 
   public ngOnInit(): void {
-    this.breadcrumbsPortalService.setPortal(this.portalContent);
+    this.breadcrumbsPortalService.setPortal(this.portalContent());
 
     this.store
       .select(selectPostId)

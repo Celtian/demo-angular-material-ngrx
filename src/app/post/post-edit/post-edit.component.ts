@@ -1,6 +1,6 @@
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnDestroy, OnInit, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,7 +47,17 @@ import { PostCollectionService } from '../post-collection.service';
   ],
 })
 export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
-  @ViewChild(CdkPortal, { static: true }) public portalContent!: CdkPortal;
+  private postCollection = inject(PostCollectionService);
+  private translate = inject(TranslateService);
+  private breadcrumbsPortalService = inject(BreadcrumbsPortalService);
+  private fb = inject(FormBuilder);
+  private snackBar = inject(MatSnackBar);
+  private lr = inject(LocalizeRouterService);
+  private confirm = inject(CustomConfirmDialogService);
+  private router = inject(Router);
+  private store = inject(Store);
+
+  public readonly portalContent = viewChild.required(CdkPortal);
   private destroyRef = inject(DestroyRef);
   public dataSource = new DataSource<PostDto>(DEFAULT_POST);
   public readonly ROUTE_DEFINITION = ROUTE_DEFINITION;
@@ -57,24 +67,12 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
     body: ['', [Validators.required, Validators.min(3)]],
   });
 
-  constructor(
-    private postCollection: PostCollectionService,
-    private translate: TranslateService,
-    private breadcrumbsPortalService: BreadcrumbsPortalService,
-    private fb: FormBuilder,
-    private snackBar: MatSnackBar,
-    private lr: LocalizeRouterService,
-    private confirm: CustomConfirmDialogService,
-    private router: Router,
-    private store: Store,
-  ) {}
-
   public canDeactivate(): boolean | Observable<boolean> {
     return this.form.pristine || this.confirm.openCustomConfirmDialog(CustomConfirmDialog.UnsavedWork);
   }
 
   public ngOnInit(): void {
-    this.breadcrumbsPortalService.setPortal(this.portalContent);
+    this.breadcrumbsPortalService.setPortal(this.portalContent());
 
     this.store
       .select(selectPostId)
@@ -101,7 +99,7 @@ export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactiv
   }
 
   public ngOnDestroy(): void {
-    this.portalContent?.detach();
+    this.portalContent()?.detach();
   }
 
   public onSubmit(): void {
