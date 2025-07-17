@@ -1,6 +1,12 @@
 import { registerLocaleData } from '@angular/common';
 import localeCs from '@angular/common/locales/cs';
-import { ApplicationConfig, ErrorHandler, importProvidersFrom, isDevMode } from '@angular/core';
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  importProvidersFrom,
+  isDevMode,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TitleStrategy, provideRouter, withViewTransitions } from '@angular/router';
 
@@ -33,6 +39,7 @@ export const defaultDataServiceConfig: DefaultDataServiceConfig = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideZonelessChangeDetection(),
     provideRouter(routes, withViewTransitions()),
     provideAppVersion({
       version: VERSION.version,
