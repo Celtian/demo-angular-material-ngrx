@@ -29,9 +29,6 @@ import { PostCollectionService } from '../post-collection.service';
 
 @Component({
   selector: 'app-post-edit',
-  templateUrl: './post-edit.component.html',
-  styleUrl: './post-edit.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     PortalModule,
     MatIconModule,
@@ -45,6 +42,9 @@ import { PostCollectionService } from '../post-collection.service';
     LocalizeRouterModule,
     PostDeleteDirective,
   ],
+  templateUrl: './post-edit.component.html',
+  styleUrl: './post-edit.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   private postCollection = inject(PostCollectionService);

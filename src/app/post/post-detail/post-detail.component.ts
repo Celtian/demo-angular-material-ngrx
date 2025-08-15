@@ -25,9 +25,6 @@ import { PostCollectionService } from '../post-collection.service';
 
 @Component({
   selector: 'app-post-detail',
-  templateUrl: './post-detail.component.html',
-  styleUrl: './post-detail.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     UpperCasePipe,
     MatCardModule,
@@ -40,6 +37,9 @@ import { PostCollectionService } from '../post-collection.service';
     LocalizeRouterModule,
     PostDeleteDirective,
   ],
+  templateUrl: './post-detail.component.html',
+  styleUrl: './post-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
   private postCollection = inject(PostCollectionService);

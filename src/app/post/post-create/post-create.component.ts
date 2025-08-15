@@ -19,9 +19,6 @@ import { PostCollectionService } from '../post-collection.service';
 
 @Component({
   selector: 'app-post-create',
-  templateUrl: './post-create.component.html',
-  styleUrl: './post-create.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     MatCardModule,
@@ -34,6 +31,9 @@ import { PostCollectionService } from '../post-collection.service';
     RouterLink,
     LocalizeRouterModule,
   ],
+  templateUrl: './post-create.component.html',
+  styleUrl: './post-create.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostCreateComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   private postCollection = inject(PostCollectionService);
