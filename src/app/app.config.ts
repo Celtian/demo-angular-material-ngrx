@@ -22,13 +22,13 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAppVersion } from 'ngx-app-version';
 import { provideFixedFooter } from 'ngx-fixed-footer';
 import { provideTranslateVersion } from 'ngx-translate-version';
-import { VERSION } from '../environments/version';
 import { routes } from './app.routes';
 import { entityConfig } from './entity-metadata';
 import { CustomDefaultDataServiceFactory } from './shared/services/custom-default-data.service';
 import { CustomErrorHandlerService } from './shared/services/custom-error-handler.service';
 import { CustomTitleStrategyService } from './shared/services/custom-title-strategy.service';
 import { MatPaginationIntlService } from './shared/services/mat-paginator-intl.service';
+import { VERSION_INFO } from './version';
 
 registerLocaleData(localeCs, 'cs-CS');
 
@@ -42,10 +42,10 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes, withViewTransitions()),
     provideAppVersion({
-      version: VERSION.version,
+      version: VERSION_INFO.version,
     }),
     provideTranslateVersion(routes, {
-      version: VERSION.version,
+      version: VERSION_INFO.version,
     }),
     provideFixedFooter({
       containerSelector: '.permanent-main',
