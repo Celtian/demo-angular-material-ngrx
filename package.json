@@ -77,7 +77,7 @@
     "lint-staged": "^16.4.0",
     "ngx-i18n-extract-regex-cli": "^0.0.13",
     "package-version-info": "^0.0.6",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.11",
     "prettier": "^3.8.3",
     "stylelint": "^17.8.0",
     "stylelint-config-standard": "^40.0.0",
