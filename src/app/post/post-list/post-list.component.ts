@@ -28,12 +28,12 @@ import { LocalizeRouterModule } from '@gilsdav/ngx-translate-router';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { debounceTime } from 'rxjs';
-import { selectPaginationParams } from 'src/app/router.selectors';
-import { PostListDetailComponent } from 'src/app/shared/components/post-list-detail/post-list-detail.component';
-import { ROUTE_DEFINITION } from 'src/app/shared/constants/route-definition.constant';
-import { PostDeleteDirective } from 'src/app/shared/directives/post-delete.directive';
-import { PostDto } from 'src/app/shared/dto/post.dto';
-import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
+import { selectPaginationParams } from '../../router.selectors';
+import { PostListDetailComponent } from '../../shared/components/post-list-detail/post-list-detail.component';
+import { ROUTE_DEFINITION } from '../../shared/constants/route-definition.constant';
+import { PostDeleteDirective } from '../../shared/directives/post-delete.directive';
+import { PostDto } from '../../shared/dto/post.dto';
+import { BreadcrumbsPortalService } from '../../shared/services/breadcrumbs-portal.service';
 import { PostCollectionService } from '../post-collection.service';
 
 @Component({

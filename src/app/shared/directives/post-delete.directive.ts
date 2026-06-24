@@ -2,7 +2,7 @@ import { Directive, HostListener, inject, input, output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, first, switchMap } from 'rxjs';
-import { PostCollectionService } from 'src/app/post/post-collection.service';
+import { PostCollectionService } from '../../post/post-collection.service';
 import { CustomConfirmDialog, CustomConfirmDialogService } from '../services/custom-confirm-dialog.service';
 
 @Directive({

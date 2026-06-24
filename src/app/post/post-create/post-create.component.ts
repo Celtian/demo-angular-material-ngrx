@@ -12,9 +12,9 @@ import { LocalizeRouterModule, LocalizeRouterService } from '@gilsdav/ngx-transl
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { CanComponentDeactivate } from 'src/app/shared/guards/can-deactivate-guard.service';
-import { BreadcrumbsPortalService } from 'src/app/shared/services/breadcrumbs-portal.service';
-import { CustomConfirmDialog, CustomConfirmDialogService } from 'src/app/shared/services/custom-confirm-dialog.service';
+import { CanComponentDeactivate } from '../../shared/guards/can-deactivate-guard.service';
+import { BreadcrumbsPortalService } from '../../shared/services/breadcrumbs-portal.service';
+import { CustomConfirmDialog, CustomConfirmDialogService } from '../../shared/services/custom-confirm-dialog.service';
 import { PostCollectionService } from '../post-collection.service';
 
 @Component({
